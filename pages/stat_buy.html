@@ -60,6 +60,22 @@ title: "Закуп характеристик"
   .over-budget {
     color: red;
   }
+  #reset-btn {
+    display: block;
+    margin: 20px auto;
+    background-color: #cc0000;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #reset-btn:hover {
+    background-color: #990000;
+  }
+
+
 </style>
 
 <div class="calculator">
@@ -131,3 +147,4 @@ title: "Закуп характеристик"
 
 <script src="./js/point_calc.js"></script>
 
+<button id="reset-btn" onclick="resetStats()">Сброс</button>
