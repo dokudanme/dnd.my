@@ -1,5 +1,6 @@
 ---
 title: Калькулятор характеристик
+layout: default
 nav_order: 6
 ---
 
