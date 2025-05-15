@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return score - 6;
     } else if (score <= 15) {
       // For scores 14 through 15, cost = 2 * score - 19
-      return 2 * score - 17;
+      return 2 * score - 19;
     } else { // score == 16
       // The jump from 15 to 16 costs 5 points: cost(16) = cost(15) + 5 = 11 + 5 = 16.
       return 16;
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (remainingPoints < 0) {
       remainingDiv.innerHTML = `<span class="over-budget">Over budget by ${-remainingPoints} point(s)!</span>`;
     } else {
-      remainingDiv.textContent = 'Remaining Points: ' + remainingPoints;
+      remainingDiv.textContent = 'Осталось очков: ' + remainingPoints;
     }
 
     window.updateButtonStates();
