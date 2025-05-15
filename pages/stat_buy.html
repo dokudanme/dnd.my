@@ -1,15 +1,13 @@
 ---
 layout: default
-title: "27 Point Buy Calculator"
+title: "Calculator"
 ---
 
-## 27 Point Buy Calculator
-
-This interactive calculator lets you adjust six ability scores for your D&D character using the 27 Point Buy system. Each stat starts at 8 and can be raised to a maximum of 15 using plus and minus buttons. The cost follows standard D&D rules: going from 8 to 13 costs 1 point per increase, while increments from 13 to 15 cost 2 points each. The points remaining are calculated automatically.
+## Calculator
 
 <style>
   .calculator {
-    background: #fff;
+    background: #7d7d7d;
     padding: 20px;
     max-width: 500px;
     margin: 20px auto;
@@ -132,12 +130,13 @@ This interactive calculator lets you adjust six ability scores for your D&D char
   <div id="remaining">Remaining Points: 27</div>
 </div>
 
+{% raw %}
 <script>
   const totalPoints = 27;
 
-  // Calculate cost for a given score.
-  // Scores 8-13: cost = score - 8.
-  // Scores 14-15: cost = 2 * score - 21.
+  // Calculate cost for a given ability score.
+  // For scores 8 to 13, cost = score - 8.
+  // For scores 14 and 15, cost = 2 * score - 21.
   function calcCost(score) {
     score = parseInt(score);
     if(score <= 13) {
@@ -147,7 +146,7 @@ This interactive calculator lets you adjust six ability scores for your D&D char
     }
   }
 
-  // Sum the cost across all abilities.
+  // Calculate the total cost across all abilities.
   function getTotalCost() {
     const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
     let total = 0;
@@ -158,13 +157,13 @@ This interactive calculator lets you adjust six ability scores for your D&D char
     return total;
   }
 
-  // Update the remaining points display.
+  // Update the remaining points display and enable/disable buttons.
   function recalc() {
     const totalCost = getTotalCost();
     const remainingPoints = totalPoints - totalCost;
     const remainingDiv = document.getElementById('remaining');
 
-    if(remainingPoints < 0) {
+    if (remainingPoints < 0) {
       remainingDiv.innerHTML = `<span class="over-budget">Over budget by ${-remainingPoints} point(s)!</span>`;
     } else {
       remainingDiv.textContent = 'Remaining Points: ' + remainingPoints;
@@ -173,7 +172,7 @@ This interactive calculator lets you adjust six ability scores for your D&D char
     updateButtonStates();
   }
 
-  // Enable/disable buttons based on current stats and remaining points.
+  // Enable/disable buttons based on the current stat values and remaining points.
   function updateButtonStates() {
     const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
     const remaining = totalPoints - getTotalCost();
@@ -183,8 +182,8 @@ This interactive calculator lets you adjust six ability scores for your D&D char
       
       // Disable the minus button if at minimum.
       document.getElementById(stat + '-minus').disabled = (currentValue <= 8);
-
-      // Disable the plus button if at maximum or if not enough points remain.
+      
+      // Disable the plus button if at maximum or if there aren't enough points remaining.
       if (currentValue >= 15) {
         document.getElementById(stat + '-plus').disabled = true;
       } else {
@@ -222,3 +221,4 @@ This interactive calculator lets you adjust six ability scores for your D&D char
   // Initialize the calculator.
   recalc();
 </script>
+{% endraw %}
