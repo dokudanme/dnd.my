@@ -6,3 +6,19 @@ url: https://dokudanme.github.io/dnd.my
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
+
+logo: "/assets/logo.png"
+
+favicon_ico: "/assets/favicon-32x32.png"
+
+footer_content: 'DND.MY — неофициальный фанатский контент, разрешенный согласно Политике фанатского контента. Не одобрено/не поддерживается Wizards. Часть материалов принадлежит Wizards of the Coast. &copy; Wizards of the Coast LLC.'
+
+color_scheme: dark
+
+nav_enabled: true
+
+heading_anchors: true
+
+
+
+
