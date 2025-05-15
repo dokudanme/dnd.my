@@ -90,6 +90,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     window.recalc();
   };
+  
+  window.resetStats = function() {
+    const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  
+    abilities.forEach(stat => {
+      document.getElementById(stat).textContent = "6"; // Set each stat to default 6
+    });
+
+  window.recalc(); // Recalculate remaining points
+  };
+
 
   // Initial calculation on page load.
   window.recalc();
