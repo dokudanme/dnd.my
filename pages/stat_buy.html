@@ -1,0 +1,224 @@
+---
+layout: default
+title: "27 Point Buy Calculator"
+---
+
+## 27 Point Buy Calculator
+
+This interactive calculator lets you adjust six ability scores for your D&D character using the 27 Point Buy system. Each stat starts at 8 and can be raised to a maximum of 15 using plus and minus buttons. The cost follows standard D&D rules: going from 8 to 13 costs 1 point per increase, while increments from 13 to 15 cost 2 points each. The points remaining are calculated automatically.
+
+<style>
+  .calculator {
+    background: #fff;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .stat {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .stat label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .controls button {
+    background: #0077cc;
+    border: none;
+    color: white;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  .controls button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  .controls span {
+    font-size: 20px;
+    width: 40px;
+    display: inline-block;
+    text-align: center;
+  }
+  #remaining {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+  }
+  .over-budget {
+    color: red;
+  }
+</style>
+
+<div class="calculator">
+  <h1>27 Point Buy</h1>
+
+  <!-- Ability: Strength -->
+  <div class="stat">
+    <label>Strength</label>
+    <div class="controls">
+      <button onclick="decrement('str')" id="str-minus">-</button>
+      <span id="str">8</span>
+      <button onclick="increment('str')" id="str-plus">+</button>
+    </div>
+  </div>
+
+  <!-- Ability: Dexterity -->
+  <div class="stat">
+    <label>Dexterity</label>
+    <div class="controls">
+      <button onclick="decrement('dex')" id="dex-minus">-</button>
+      <span id="dex">8</span>
+      <button onclick="increment('dex')" id="dex-plus">+</button>
+    </div>
+  </div>
+
+  <!-- Ability: Constitution -->
+  <div class="stat">
+    <label>Constitution</label>
+    <div class="controls">
+      <button onclick="decrement('con')" id="con-minus">-</button>
+      <span id="con">8</span>
+      <button onclick="increment('con')" id="con-plus">+</button>
+    </div>
+  </div>
+
+  <!-- Ability: Intelligence -->
+  <div class="stat">
+    <label>Intelligence</label>
+    <div class="controls">
+      <button onclick="decrement('int')" id="int-minus">-</button>
+      <span id="int">8</span>
+      <button onclick="increment('int')" id="int-plus">+</button>
+    </div>
+  </div>
+
+  <!-- Ability: Wisdom -->
+  <div class="stat">
+    <label>Wisdom</label>
+    <div class="controls">
+      <button onclick="decrement('wis')" id="wis-minus">-</button>
+      <span id="wis">8</span>
+      <button onclick="increment('wis')" id="wis-plus">+</button>
+    </div>
+  </div>
+
+  <!-- Ability: Charisma -->
+  <div class="stat">
+    <label>Charisma</label>
+    <div class="controls">
+      <button onclick="decrement('cha')" id="cha-minus">-</button>
+      <span id="cha">8</span>
+      <button onclick="increment('cha')" id="cha-plus">+</button>
+    </div>
+  </div>
+
+  <div id="remaining">Remaining Points: 27</div>
+</div>
+
+<script>
+  const totalPoints = 27;
+
+  // Calculate cost for a given score.
+  // Scores 8-13: cost = score - 8.
+  // Scores 14-15: cost = 2 * score - 21.
+  function calcCost(score) {
+    score = parseInt(score);
+    if(score <= 13) {
+      return score - 8;
+    } else {
+      return 2 * score - 21;
+    }
+  }
+
+  // Sum the cost across all abilities.
+  function getTotalCost() {
+    const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+    let total = 0;
+    abilities.forEach(stat => {
+      const value = parseInt(document.getElementById(stat).textContent);
+      total += calcCost(value);
+    });
+    return total;
+  }
+
+  // Update the remaining points display.
+  function recalc() {
+    const totalCost = getTotalCost();
+    const remainingPoints = totalPoints - totalCost;
+    const remainingDiv = document.getElementById('remaining');
+
+    if(remainingPoints < 0) {
+      remainingDiv.innerHTML = `<span class="over-budget">Over budget by ${-remainingPoints} point(s)!</span>`;
+    } else {
+      remainingDiv.textContent = 'Remaining Points: ' + remainingPoints;
+    }
+
+    updateButtonStates();
+  }
+
+  // Enable/disable buttons based on current stats and remaining points.
+  function updateButtonStates() {
+    const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+    const remaining = totalPoints - getTotalCost();
+
+    abilities.forEach(stat => {
+      const currentValue = parseInt(document.getElementById(stat).textContent);
+      
+      // Disable the minus button if at minimum.
+      document.getElementById(stat + '-minus').disabled = (currentValue <= 8);
+
+      // Disable the plus button if at maximum or if not enough points remain.
+      if (currentValue >= 15) {
+        document.getElementById(stat + '-plus').disabled = true;
+      } else {
+        const additionalCost = calcCost(currentValue + 1) - calcCost(currentValue);
+        document.getElementById(stat + '-plus').disabled = (remaining < additionalCost);
+      }
+    });
+  }
+
+  // Increase the stat value by 1 if possible.
+  function increment(stat) {
+    const span = document.getElementById(stat);
+    let currentValue = parseInt(span.textContent);
+    if (currentValue < 15) {
+      const additionalCost = calcCost(currentValue + 1) - calcCost(currentValue);
+      if (totalPoints - getTotalCost() >= additionalCost) {
+        span.textContent = currentValue + 1;
+      } else {
+        alert("Not enough points remaining for that increase!");
+      }
+    }
+    recalc();
+  }
+
+  // Decrease the stat value by 1 if possible.
+  function decrement(stat) {
+    const span = document.getElementById(stat);
+    let currentValue = parseInt(span.textContent);
+    if (currentValue > 8) {
+      span.textContent = currentValue - 1;
+    }
+    recalc();
+  }
+
+  // Initialize the calculator.
+  recalc();
+</script>
