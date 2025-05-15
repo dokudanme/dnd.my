@@ -1,18 +1,21 @@
-// calculator.js
 document.addEventListener("DOMContentLoaded", function() {
-  console.log("calculator.js loaded and DOM is ready.");
-  
-  window.totalPoints = 27;
+  console.log("Modified calculator loaded and DOM is ready.");
 
-  // Calculate cost for a given ability score.
-  // For scores 8 to 13, cost = score - 8.
-  // For scores 14 and 15, cost = 2 * score - 21.
+  // Define total available points (you can adjust this as needed)
+  window.totalPoints = 39;
+
+  // Modified cost function for score range 6 to 16.
   window.calcCost = function(score) {
     score = parseInt(score);
-    if (score <= 13) {
-      return score - 8;
-    } else {
-      return 2 * score - 21;
+    if (score <= 11) {
+      // For scores 6 through 11, cost = score - 6
+      return score - 6;
+    } else if (score <= 15) {
+      // For scores 12 through 15, cost = 2 * score - 17
+      return 2 * score - 17;
+    } else { // score == 16
+      // The jump from 15 to 16 costs 5 points: cost(16) = cost(15) + 5 = 13 + 5 = 18.
+      return 18;
     }
   };
 
@@ -27,33 +30,34 @@ document.addEventListener("DOMContentLoaded", function() {
     return total;
   };
 
-  // Update the remaining points display and button states.
+  // Update the remaining points display and disable/enable buttons.
   window.recalc = function() {
     const totalCost = window.getTotalCost();
     const remainingPoints = window.totalPoints - totalCost;
     const remainingDiv = document.getElementById('remaining');
-    
+
     if (remainingPoints < 0) {
       remainingDiv.innerHTML = `<span class="over-budget">Over budget by ${-remainingPoints} point(s)!</span>`;
     } else {
       remainingDiv.textContent = 'Remaining Points: ' + remainingPoints;
     }
-    
+
     window.updateButtonStates();
   };
 
-  // Enable/disable plus and minus buttons based on the current stats and remaining points.
+  // Update the state of plus and minus buttons based on the current stat value.
   window.updateButtonStates = function() {
     const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
     const remaining = window.totalPoints - window.getTotalCost();
 
     abilities.forEach(function(stat) {
       const currentValue = parseInt(document.getElementById(stat).textContent);
-      // Disable the minus button if at minimum.
-      document.getElementById(stat + '-minus').disabled = (currentValue <= 8);
-      
-      // Disable the plus button if at maximum or if not enough points remain.
-      if (currentValue >= 15) {
+      // Disable the minus button if at the lower bound of 6.
+      document.getElementById(stat + '-minus').disabled = (currentValue <= 6);
+
+      // Disable the plus button if at the upper bound of 16,
+      // or if not enough points remain for the next increase.
+      if (currentValue >= 16) {
         document.getElementById(stat + '-plus').disabled = true;
       } else {
         const additionalCost = window.calcCost(currentValue + 1) - window.calcCost(currentValue);
@@ -62,11 +66,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   };
 
-  // Increase the stat value by 1 if possible.
+  // Increase the stat value if possible.
   window.increment = function(stat) {
     const span = document.getElementById(stat);
     let currentValue = parseInt(span.textContent);
-    if (currentValue < 15) {
+    if (currentValue < 16) {  // Allow increases until 16
       const additionalCost = window.calcCost(currentValue + 1) - window.calcCost(currentValue);
       if (window.totalPoints - window.getTotalCost() >= additionalCost) {
         span.textContent = currentValue + 1;
@@ -77,17 +81,16 @@ document.addEventListener("DOMContentLoaded", function() {
     window.recalc();
   };
 
-  // Decrease the stat value by 1 if possible.
+  // Decrease the stat value if possible.
   window.decrement = function(stat) {
     const span = document.getElementById(stat);
     let currentValue = parseInt(span.textContent);
-    if (currentValue > 8) {
+    if (currentValue > 6) {  // Allow decreases only down to 6
       span.textContent = currentValue - 1;
     }
     window.recalc();
   };
 
-  // Initial calculation.
+  // Initial calculation on page load.
   window.recalc();
 });
-
