@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Modified calculator loaded and DOM is ready.");
-
+  window.updateModifiers(); // Call updateModifiers when the page loads
   // Define total available points (you can adjust this as needed)
   window.totalPoints = 39;
 
@@ -66,6 +66,24 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   };
 
+  // ---------------------------------------------------
+  window.calculateModifier = function(statValue) {
+    return Math.floor((statValue - 10) / 2); // Modifier formula
+  };
+  
+  window.updateModifiers = function() {
+    const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  
+    abilities.forEach(stat => {
+      const statValue = parseInt(document.getElementById(stat).textContent);
+      const modifierValue = window.calculateModifier(statValue);
+      document.getElementById('mod-' + stat).textContent = (modifierValue >= 0 ? '+' : '') + modifierValue;
+    });
+  };
+
+  // --------------------------------------------------
+  
+  
   // Increase the stat value if possible.
   window.increment = function(stat) {
     const span = document.getElementById(stat);
@@ -74,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
       const additionalCost = window.calcCost(currentValue + 1) - window.calcCost(currentValue);
       if (window.totalPoints - window.getTotalCost() >= additionalCost) {
         span.textContent = currentValue + 1;
+        window.updateModifiers(); // Update modifiers after stat change
       } else {
         alert("Not enough points remaining for that increase!");
       }
@@ -87,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let currentValue = parseInt(span.textContent);
     if (currentValue > 6) {  // Allow decreases only down to 6
       span.textContent = currentValue - 1;
+      window.updateModifiers(); // Update modifiers after stat change
     }
     window.recalc();
   };
@@ -97,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
     abilities.forEach(stat => {
       document.getElementById(stat).textContent = "6"; // Set each stat to default 6
     });
-
+  window.updateModifiers(); // Reset modifiers as well
   window.recalc(); // Recalculate remaining points
   };
 
