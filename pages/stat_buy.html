@@ -1,11 +1,7 @@
 ---
 layout: default
-title: "27 Point Buy Calculator"
+title: "Calculator"
 ---
-
-## 27 Point Buy Calculator
-
-This interactive calculator lets you adjust six ability scores for your D&D character using a 27 point buy system. Each stat starts at 8 and can be increased (up to 15) or decreased (down to 8) using the plus and minus buttons. The cost follows standard D&D 27 point buy rules: increasing from 8 to any score up to 13 costs 1 point per increment, and going from 13 to 14 (or 14 to 15) costs 2 points per increment.
 
 <style>
   .calculator {
@@ -132,100 +128,6 @@ This interactive calculator lets you adjust six ability scores for your D&D char
   <div id="remaining">Remaining Points: 27</div>
 </div>
 
-{% raw %}
-<script>
-  // Wait for the DOM to be fully loaded
-  document.addEventListener("DOMContentLoaded", function() {
-    console.log("Script loaded and DOM is ready.");
-    // Set the total points for the 27 point buy
-    window.totalPoints = 27;
 
-    // Calculate cost for a given ability score.
-    // For scores 8 to 13, cost = score - 8.
-    // For scores 14 and 15, cost = 2 * score - 21.
-    window.calcCost = function(score) {
-      score = parseInt(score);
-      if (score <= 13) {
-        return score - 8;
-      } else {
-        return 2 * score - 21;
-      }
-    };
+<script src="assets/js/calc.js"></script>
 
-    // Sum the cost across all six abilities.
-    window.getTotalCost = function() {
-      const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-      let total = 0;
-      abilities.forEach(stat => {
-        const value = parseInt(document.getElementById(stat).textContent);
-        total += window.calcCost(value);
-      });
-      return total;
-    };
-
-    // Update the remaining points display and button states.
-    window.recalc = function() {
-      const totalCost = window.getTotalCost();
-      const remainingPoints = window.totalPoints - totalCost;
-      const remainingDiv = document.getElementById('remaining');
-
-      if (remainingPoints < 0) {
-        remainingDiv.innerHTML = `<span class="over-budget">Over budget by ${-remainingPoints} point(s)!</span>`;
-      } else {
-        remainingDiv.textContent = 'Remaining Points: ' + remainingPoints;
-      }
-
-      window.updateButtonStates();
-    };
-
-    // Enable or disable plus/minus buttons based on stat values and remaining points.
-    window.updateButtonStates = function() {
-      const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-      const remaining = window.totalPoints - window.getTotalCost();
-
-      abilities.forEach(stat => {
-        const currentValue = parseInt(document.getElementById(stat).textContent);
-
-        // Disable the minus button if at minimum.
-        document.getElementById(stat + '-minus').disabled = (currentValue <= 8);
-
-        // Disable the plus button if at maximum or if not enough points remain.
-        if (currentValue >= 15) {
-          document.getElementById(stat + '-plus').disabled = true;
-        } else {
-          const additionalCost = window.calcCost(currentValue + 1) - window.calcCost(currentValue);
-          document.getElementById(stat + '-plus').disabled = (remaining < additionalCost);
-        }
-      });
-    };
-
-    // Increase the stat value by 1 if possible.
-    window.increment = function(stat) {
-      const span = document.getElementById(stat);
-      let currentValue = parseInt(span.textContent);
-      if (currentValue < 15) {
-        const additionalCost = window.calcCost(currentValue + 1) - window.calcCost(currentValue);
-        if (window.totalPoints - window.getTotalCost() >= additionalCost) {
-          span.textContent = currentValue + 1;
-        } else {
-          alert("Not enough points remaining for that increase!");
-        }
-      }
-      window.recalc();
-    };
-
-    // Decrease the stat value by 1 if possible.
-    window.decrement = function(stat) {
-      const span = document.getElementById(stat);
-      let currentValue = parseInt(span.textContent);
-      if (currentValue > 8) {
-        span.textContent = currentValue - 1;
-      }
-      window.recalc();
-    };
-
-    // Initial calculation on load.
-    window.recalc();
-  });
-</script>
-{% endraw %}
