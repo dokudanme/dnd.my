@@ -7,15 +7,15 @@ document.addEventListener("DOMContentLoaded", function() {
   // Modified cost function for score range 6 to 16.
   window.calcCost = function(score) {
     score = parseInt(score);
-    if (score <= 11) {
-      // For scores 6 through 11, cost = score - 6
+    if (score <= 13) {
+      // For scores 6 through 13, cost = score - 6
       return score - 6;
     } else if (score <= 15) {
-      // For scores 12 through 15, cost = 2 * score - 17
+      // For scores 14 through 15, cost = 2 * score - 19
       return 2 * score - 17;
     } else { // score == 16
-      // The jump from 15 to 16 costs 5 points: cost(16) = cost(15) + 5 = 13 + 5 = 18.
-      return 18;
+      // The jump from 15 to 16 costs 5 points: cost(16) = cost(15) + 5 = 11 + 5 = 16.
+      return 16;
     }
   };
 
