@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Modified calculator loaded and DOM is ready.");
-  window.updateModifiers(); // Call updateModifiers when the page loads
+  
   // Define total available points (you can adjust this as needed)
   window.totalPoints = 39;
 
@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   };
 
-  // ---------------------------------------------------
   window.calculateModifier = function(statValue) {
     return Math.floor((statValue - 10) / 2); // Modifier formula
   };
@@ -81,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   };
 
-  // --------------------------------------------------
   
   
   // Increase the stat value if possible.
@@ -121,7 +119,8 @@ document.addEventListener("DOMContentLoaded", function() {
   window.recalc(); // Recalculate remaining points
   };
 
-
   // Initial calculation on page load.
   window.recalc();
+  // Call updateModifiers when the page loads
+  window.updateModifiers(); 
 });
