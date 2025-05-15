@@ -1,8 +1,8 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: dnd.my
+description: Мой личный сборник вкусностей
 theme: just-the-docs
 
-url: https://just-the-docs.github.io
+url: https://dokudan.github.io/dnd.my
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
