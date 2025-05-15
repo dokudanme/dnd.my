@@ -4,8 +4,8 @@ theme: just-the-docs
 
 url: https://dokudanme.github.io/dnd.my
 
-aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
+#aux_links:
+#  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 logo: "/assets/logo.png"
 
