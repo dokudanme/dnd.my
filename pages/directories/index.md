@@ -2,6 +2,7 @@
 layout: default
 title: "Справочники"
 nav_order: 4
+nav_exclude: true
 ---
 
 # В этой директории будут собраны
