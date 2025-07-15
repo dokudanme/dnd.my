@@ -10,7 +10,7 @@ has_toc: false
 Вступление <br>
 Описание
 
-- [Географияя]({% link pages/mirael/world/geography.md %})
+- [География]({% link pages/mirael/world/geography.md %})
 - [Магия]({% link pages/mirael/world/magic.md %})
 - [Миф о сотворении мира]({% link pages/mirael/world/mif.md %})
 - [Пантеон]({% link pages/mirael/world/pantheon.md %})
