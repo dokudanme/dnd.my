@@ -12,15 +12,16 @@
 		- География (./geography.md)
 	- Создание персонажа (./character_creation.md)
 	- Механики (./mechanics.md)
-	-
+	- Гильдия авантюристов (./adventures_guild.md)
+	- Империя Эйратор (./eirator_empire.md)
 
---- deprecated
+--- deprecated ---
 - Правила (./rules)
 - Справочники (./directories)
 	  - Заклинания
 	  - Магические предметы
 	  - Расы
 	  - Классы
---- deprecated
+--- deprecated ---
 
 - Закуп характеристик (./point_buy)
