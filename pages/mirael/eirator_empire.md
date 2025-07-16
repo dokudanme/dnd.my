@@ -5,7 +5,7 @@ parent: "Мираэль"
 nav_order: 3
 ---
 
-![](../../../assets/ei.png)
+![](../../assets/ei.png)
 
 1. TOC
 {:toc}
