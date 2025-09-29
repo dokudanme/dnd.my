@@ -1,8 +1,9 @@
 ---
 layout: default
 title: "Завязка сюжета"
-parent: "Мираэль"
+# parent: "Мираэль"
 nav_order: 4
+nav_exclude: true
 ---
 
 # Завязка сюжета

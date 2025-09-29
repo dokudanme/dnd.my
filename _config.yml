@@ -13,7 +13,7 @@ favicon_ico: "/assets/favicon-32x32.png"
 
 footer_content: 'DND.MY — неофициальный фанатский контент, разрешенный согласно Политике фанатского контента. Не одобрено/не поддерживается Wizards. Часть материалов принадлежит Wizards of the Coast. &copy; Wizards of the Coast LLC.'
 
-color_scheme: dark
+color_scheme: light
 
 nav_enabled: true
 

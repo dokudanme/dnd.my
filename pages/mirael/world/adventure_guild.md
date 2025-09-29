@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Гильдия авантюристов"
-parent: "Мираэль"
+parent: "Мир"
 nav_order: 5
 ---
 # Гильдия авантюристов

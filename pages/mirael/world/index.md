@@ -7,8 +7,7 @@ has_toc: false
 ---
 # Мир
 <br>
-Вступление <br>
-Описание
+
 
 - [География]({% link pages/mirael/world/geography.md %})
 - [Магия]({% link pages/mirael/world/magic.md %})

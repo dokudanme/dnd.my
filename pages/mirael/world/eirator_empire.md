@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Империя Эйратор"
-parent: "Мираэль"
+parent: "Мир"
 nav_order: 3
 ---
 

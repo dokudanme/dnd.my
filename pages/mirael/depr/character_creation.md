@@ -1,8 +1,9 @@
 ---
 layout: default
 title: "Создание персонажа"
-parent: "Мираэль"
+# parent: "Мираэль"
 nav_order: 3
+nav_exclude: true
 ---
 # Создание персонажа
 {: .no_toc}
